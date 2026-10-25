@@ -1,0 +1,25 @@
+services:
+  batterieoptimizer:
+    build: .
+    image: batterieoptimizer:latest
+    container_name: batterieoptimizer
+    restart: unless-stopped
+    # evcc und Mosquitto laufen auf demselben Host; .local-Namen löst ein Container nicht auf
+    network_mode: host
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      EVCC_URL: ${EVCC_URL:-http://localhost:7070}
+      MQTT_HOST: ${MQTT_HOST:-localhost}
+      DRY_RUN: ${DRY_RUN:-true}
+    volumes:
+      - batterieoptimizer-data:/data
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+volumes:
+  batterieoptimizer-data:

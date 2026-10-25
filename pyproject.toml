@@ -1,0 +1,32 @@
+[project]
+name = "batterieoptimizer"
+version = "0.1.0"
+description = "Setzt die evcc-Preisgrenze für das Netzladen der Hausbatterie anhand eines optimalen Ladeplans"
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.27",
+    "pydantic>=2.7",
+    "pydantic-settings[yaml]>=2.3",
+    "aiomqtt>=2.3",
+    "tzdata",
+]
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["batterieoptimizer"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
